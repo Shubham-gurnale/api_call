@@ -23,12 +23,13 @@ class _HomePageState extends State<HomePage> {
     Future fetchData() async{
       http.Response response;
       response = await http
-            .get('https://www.thegrowingdeveloper.org/apiview?id=2');
-      //'https://zenalpha.me/wp-json/wp/v2/users'
+            .get('https://zenalpha.me/wp-json/wp/v2/users');
+      //'https://www.thegrowingdeveloper.org/apiview?id=2'
       if(response.statusCode == 200) {
         setState(() {
-          mapResponse = json.decode(response.body);
-          listOfFacts = mapResponse['facts'];
+          //mapResponse = json.decode(response.body);
+          //listOfFacts = mapResponse['facts'];
+          listOfFacts = json.decode(response.body);
 
         });
       }
@@ -46,11 +47,12 @@ class _HomePageState extends State<HomePage> {
        backgroundColor: Colors.blue[900],
      ),
      body :
-   mapResponse==null?Container(): SingleChildScrollView(
+   listOfFacts==null?Container(): SingleChildScrollView(
      child: Column(
        children: <Widget>[
          Text(
-           mapResponse['id'].toString(),
+           "List of users",
+           //mapResponse['id'].toString(),
            style: TextStyle(fontSize: 30),
          ),
          ListView.builder(
@@ -61,13 +63,13 @@ class _HomePageState extends State<HomePage> {
              margin: EdgeInsets.all(10),
              child: Column(
                children: <Widget>[
-               Image.network(listOfFacts[index]['image_url']),
+               //Image.network(listOfFacts[index]['image_url']),
                  Text(
-                   listOfFacts[index]['title'].toString(),
+                   listOfFacts[index]['id'].toString(),
                    style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),
                  ),
                  Text(
-                   listOfFacts[index]['description'].toString(),
+                   listOfFacts[index]['name'].toString(),
                    style: TextStyle(fontSize: 18),
                  ),
                  ],
